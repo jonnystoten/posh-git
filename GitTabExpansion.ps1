@@ -38,10 +38,13 @@ try {
 catch {
 }
 
+$script:customCommands = @('diffall')
+
 function script:gitCommands($filter, $includeAliases) {
     $cmdList = @()
     if (-not $global:GitTabSettings.AllCommands) {
         $cmdList += $someCommands -like "$filter*"
+        $cmdList += $customCommands -like "$filter*"
     } else {
         $cmdList += git help --all |
             where { $_ -match '^  \S.*' } |
